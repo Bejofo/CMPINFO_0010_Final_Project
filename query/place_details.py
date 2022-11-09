@@ -3,7 +3,7 @@ import googlemaps
 
 # Connect to Google Maps API
 API_KEY = input("Enter the API key: ")
-gmaps = googlemaps.Client(key = API_KEY)
+gmaps = googlemaps.Client(key = API_KEY, timeout=5)
 
 # Import business list
 business_list = open("data/search_nearby.csv", "r", encoding="utf-8-sig", newline='')
@@ -23,7 +23,10 @@ csv_writer.writerow(["place_id", "name", "plus_code", "street_number", "route", 
 for business in business_data:
     # Check API call status
     while (True):
-        response = gmaps.place(place_id=business[0])
+        try:
+            response = gmaps.place(place_id=business[0])
+        except:
+            input("Request failed. Press enter to retry.")
                     
         if (response["status"] == "OK"):
             break

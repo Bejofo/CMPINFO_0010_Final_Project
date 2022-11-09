@@ -3,11 +3,11 @@ from PIL import Image
 import googlemaps
 
 # Config
-SPACING = 10
+SPACING = 1
 
 # Connect to Google Maps API
 API_KEY = input("Enter the API key: ")
-gmaps = googlemaps.Client(key = API_KEY)
+gmaps = googlemaps.Client(key = API_KEY, timeout=5)
 
 # Geographical information
 SOUTH_LIMIT = 40.361370
@@ -56,7 +56,10 @@ for x in range(X_INTERVALS):
         if (map.getpixel((pixel_x, pixel_y)) == (0, 0, 0, 255)):
             # Check API call status
             while (True):
-                response = gmaps.places(location=(latitude, longitude), radius=RADIUS_M, type="restaurant")
+                try:
+                    response = gmaps.places(location=(latitude, longitude), radius=RADIUS_M, type="restaurant")
+                except:
+                    input("Request failed. Press enter to retry.")
             
                 if (response["status"] == "OK"):
                     break
