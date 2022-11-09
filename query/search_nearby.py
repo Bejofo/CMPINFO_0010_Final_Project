@@ -15,7 +15,7 @@ SOUTH_NORTH_DIST_KM = 15.58 # 111 km per degree latitude
 # Query API
 id_list = []
 
-def get_pages(latitude, longitude, search_radius, pages_count):
+def get_pages(latitude, longitude, search_radius):
     pages = []
 
     # First page
@@ -24,10 +24,10 @@ def get_pages(latitude, longitude, search_radius, pages_count):
     pages.append(page1["results"])
 
     # Additional pages
-    for i in range(pages_count - 1):
+    while True:
         token = current_page.get("next_page_token")
 
-        if duplicate_count(current_page["results"]) >= 10 or token == None:
+        if duplicate_count(current_page["results"]) == 20 or token == None:
             break
         
         time.sleep(2)
@@ -86,7 +86,6 @@ map.load()
 
 # Search options
 SPACING = float(input("Spacing (km): "))
-PAGES = int(input("Pages: "))
 
 # Calculate parameters
 RADIUS = SPACING / 2
@@ -113,13 +112,13 @@ for x in range(X_INTERVALS):
         # Check intersection
         if (map.getpixel((pixel_x, pixel_y)) == (0, 0, 0, 255)):
             # API call
-            pages = get_pages(latitude, longitude, RADIUS_M, PAGES)
+            pages = get_pages(latitude, longitude, RADIUS_M)
 
             for page in pages:
                 output.append(page)
 
 # json dump
-json_dump = open("data/search_nearby_unprocessed_" + str(SPACING) + "_" + str(PAGES) + ".json", "w", encoding="utf-8-sig")
+json_dump = open("data/search_nearby_unprocessed_" + str(SPACING) + ".json", "w", encoding="utf-8-sig")
 json.dump(output, json_dump)
 
 # csv output
@@ -140,7 +139,7 @@ def write_to_csv(business):
     csv_writer.writerow([place_id, name, business_status, formatted_address, latitude, longitude, price_level, rating, user_ratings_total])
 
 # write to csv
-data_output = open("data/search_nearby_" + str(SPACING) + "_" + str(PAGES) + ".csv", "w", encoding="utf-8-sig", newline="")
+data_output = open("data/search_nearby_" + str(SPACING) + ".csv", "w", encoding="utf-8-sig", newline="")
 csv_writer = csv.writer(data_output)
 csv_writer.writerow(["place_id", "name", "business_status", "formatted_address", "latitude", "longitude", "price_level", "rating", "user_ratings_total"])
 
