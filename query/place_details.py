@@ -1,27 +1,8 @@
 import json, csv
 import googlemaps
 
-# Connect to Google Maps API
-API_KEY = input("Enter the API key: ")
-gmaps = googlemaps.Client(key = API_KEY, timeout=5)
-
-# Import business list
-business_list = open("data/search_nearby.csv", "r", encoding="utf-8-sig", newline='')
-business_data = csv.reader(business_list)
-next(business_data)
-
-# json
-json_dump = open("data/place_details_unprocessed.json", "w", encoding="utf-8-sig")
-json_export = []
-
-# csv
-data_output = open("data/place_details.csv", "w", encoding="utf-8-sig", newline='')
-csv_writer = csv.writer(data_output)
-csv_writer.writerow(["place_id", "name", "plus_code", "street_number", "route", "neighborhood", "township", "postal_code", "latitude", "longitude", "curbside_pickup", "price_level", "rating", "user_ratings_total", "mon_open", "mon_close", "tue_open", "tue_close", "wed_open", "wed_close", "thu_open", "thu_close", "fri_open", "fri_close", "sat_open", "sat_close", "sun_open", "sun_close"])
-
-# Query businesses in list
-for business in business_data:
-    # Check API call status
+# Query API
+def get_details(id):
     while (True):
         try:
             response = gmaps.place(place_id=business[0])
@@ -29,23 +10,38 @@ for business in business_data:
             input("Request failed. Press enter to retry.")
                     
         if (response["status"] == "OK"):
-            break
+            return response
         else:
-            print("Request failed! Status: " + response["status"])
+            print("Request error. Status: " + response["status"])
             input("Press enter to retry.")
-    
-    # Process data
-    data = response["result"]
 
-    # json
-    json_export.append(response)
+# Connect to Google Maps API
+API_KEY = input("Enter the API key: ")
+gmaps = googlemaps.Client(key = API_KEY, timeout=5)
 
-    # csv
-    name = data.get("name")
-    place_id = data.get("place_id")
-    plus_code = data.get("plus_code").get("global_code")
+# Import business list
+file_name = input("CSV file location: ")
+business_list = open(file_name, "r", encoding="utf-8-sig", newline="")
+business_data = csv.reader(business_list)
+next(business_data)
 
-    address_components = data.get("address_components")
+output = []
+
+for business in business_data:
+    response = get_details(business[0])
+    output.append(response["result"])
+
+# json
+json_dump = open("data/place_details_unprocessed.json", "w", encoding="utf-8-sig")
+json.dump(output, json_dump)
+
+# write to csv
+def write_to_csv(business):
+    name = business.get("name")
+    place_id = business.get("place_id")
+    plus_code = business.get("plus_code").get("global_code")
+
+    address_components = business.get("address_components")
     neighborhood = None
     township = None
 
@@ -72,19 +68,19 @@ for business in business_data:
             postal_code = component.get("long_name")
 
 
-    location = data.get("geometry").get("location")
+    location = business.get("geometry").get("location")
     latitude = location.get("lat")
     longitude = location.get("lng")
 
-    curbside_pickup = data.get("curbside_pickup")
-    price_level = data.get("price_level")
-    rating = data.get("rating")
-    user_ratings_total = data.get("user_ratings_total")
+    curbside_pickup = business.get("curbside_pickup")
+    price_level = business.get("price_level")
+    rating = business.get("rating")
+    user_ratings_total = business.get("user_ratings_total")
 
     details = [place_id, name, plus_code, street_number, route, neighborhood, township, postal_code, latitude, longitude, curbside_pickup, price_level, rating, user_ratings_total]
 
     # WIP
-    opening_hours = data.get("opening_hours")
+    opening_hours = business.get("opening_hours")
 
     for day in opening_hours["periods"]:
         open = day["open"]["time"]
@@ -95,7 +91,14 @@ for business in business_data:
 
     csv_writer.writerow(details)
 
-json.dump(json_export, json_dump)
+# csv
+data_output = open("data/place_details.csv", "w", encoding="utf-8-sig", newline='')
+csv_writer = csv.writer(data_output)
+csv_writer.writerow(["place_id", "name", "plus_code", "street_number", "route", "neighborhood", "township", "postal_code", "latitude", "longitude", "curbside_pickup", "price_level", "rating", "user_ratings_total", "mon_open", "mon_close", "tue_open", "tue_close", "wed_open", "wed_close", "thu_open", "thu_close", "fri_open", "fri_close", "sat_open", "sat_close", "sun_open", "sun_close"])
+
+# Query businesses in list
+for business in output:
+    write_to_csv(business)
 
 business_list.close()
 json_dump.close()
