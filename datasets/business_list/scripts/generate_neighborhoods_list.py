@@ -2,7 +2,7 @@ import csv
 
 neighborhoods_google = []
 
-with open("datasets/business_list/scripts/neighborhood_list.txt", "w", encoding="utf-8") as out:
+with open("datasets/business_list/assets/neighborhood_list.txt", "w", encoding="utf-8") as out:
     with open("datasets/business_list/business_list.csv", "r", encoding="utf-8-sig") as list:
         businesses = csv.DictReader(list)
 

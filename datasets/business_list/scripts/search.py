@@ -1,6 +1,6 @@
 import math, json
 from PIL import Image
-from lib.util import API_Session
+from api import API_Session
 
 # CONFIG - Search parameters
 SPACING = 1
@@ -52,7 +52,7 @@ for x in range(X_INTERVALS):
         # Check intersection
         if (map.getpixel((pixel_x, pixel_y)) == (0, 0, 0, 255)):
             for type in TYPES:
-                pages = api_session.get_pages(latitude, longitude, RADIUS_M, type)
+                pages = api_session.get_pages(latitude, longitude, RADIUS_M, type, id_list)
 
                 for page in pages:
                     output.append(page)
