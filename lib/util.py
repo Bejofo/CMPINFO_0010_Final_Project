@@ -1,6 +1,6 @@
-import json
-from shapely.geometry import shape, Point
+import json, time
 import googlemaps
+from shapely.geometry import shape, Point
 
 class API_Session:
     def __init__(self, api_key):
@@ -29,6 +29,41 @@ class API_Session:
 
     def place_details(self, id):
         return self.client.place(place_id=id)
+
+    def get_pages(self, latitude, longitude, search_radius, type, id_list):
+        pages = []
+
+        # First page
+        page1 = self.call("first_page", latitude, longitude, search_radius, type)
+        current_page = page1
+        pages.append(page1["results"])
+
+        # Additional pages
+        while True:
+            token = current_page.get("next_page_token")
+
+            if self.duplicate_count(id_list, current_page["results"]) == 20 or token == None:
+                break
+            
+            time.sleep(2)
+
+            current_page = self.call("next_page", token)
+            pages.append(current_page["results"])
+        
+        return pages
+
+    def duplicate_count(id_list, page):
+        count = 0
+        
+        for business in page:
+            place_id = business["place_id"]
+
+            if place_id in id_list:
+                count += 1
+            else:
+                id_list.append(place_id)
+
+        return count
 
 class Reverse_Geocoder:
     def __init__(self, file_path, region_name_attr = None):

@@ -1,6 +1,6 @@
-import math, json, csv, time
+import math, json
 from PIL import Image
-from util import API_Session
+from lib.util import API_Session
 
 # CONFIG - Search parameters
 SPACING = 1
@@ -22,7 +22,7 @@ api_session = API_Session(api_key)
 
 # PLACE SEARCH
 # Import map
-map = Image.open("query/pittsburgh.png")
+map = Image.open("datasets/business_list/assets/pittsburgh.png")
 map.load()
 
 # Calculate parameters
@@ -32,41 +32,6 @@ X_INTERVALS = math.floor(WEST_EAST_DIST_KM / SPACING)
 X_START = 1 / X_INTERVALS / 2
 Y_INTERVALS = math.floor(SOUTH_NORTH_DIST_KM / SPACING)
 Y_START = 1 / Y_INTERVALS / 2
-
-def get_pages(latitude, longitude, search_radius, type):
-    pages = []
-
-    # First page
-    page1 = api_session.call("first_page", latitude, longitude, search_radius, type)
-    current_page = page1
-    pages.append(page1["results"])
-
-    # Additional pages
-    while True:
-        token = current_page.get("next_page_token")
-
-        if duplicate_count(current_page["results"]) == 20 or token == None:
-            break
-        
-        time.sleep(2)
-
-        current_page = api_session.call("next_page", token)
-        pages.append(current_page["results"])
-    
-    return pages
-
-def duplicate_count(page):
-    count = 0
-    
-    for business in page:
-        place_id = business["place_id"]
-
-        if place_id in id_list:
-            count += 1
-        else:
-            id_list.append(place_id)
-
-    return count
 
 # Query places list from API
 output = []
@@ -87,13 +52,13 @@ for x in range(X_INTERVALS):
         # Check intersection
         if (map.getpixel((pixel_x, pixel_y)) == (0, 0, 0, 255)):
             for type in TYPES:
-                pages = get_pages(latitude, longitude, RADIUS_M, type)
+                pages = api_session.get_pages(latitude, longitude, RADIUS_M, type)
 
                 for page in pages:
                     output.append(page)
 
 # Dump search nearby results
-with open("data/search_nearby_unprocessed.json", "w", encoding="utf-8-sig") as dump:
+with open("datasets/business_list/dumps/search_nearby_unprocessed.json", "w", encoding="utf-8-sig") as dump:
     json.dump(output, dump)
 
 # PLACE DETAILS
@@ -105,7 +70,7 @@ for place_id in id_list:
     output.append(response["result"])
 
 # Dump search nearby results
-with open("data/place_details_unprocessed.json", "w", encoding="utf-8-sig") as dump:
+with open("datasets/business_list/dumps/place_details_unprocessed.json", "w", encoding="utf-8-sig") as dump:
     json.dump(output, dump)
 
 # Finish

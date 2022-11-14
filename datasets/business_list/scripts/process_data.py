@@ -1,17 +1,12 @@
 import json, csv
 
 # import json
-with open("data/source/place_details_unprocessed.json", "r", encoding="utf-8-sig", newline="") as file:
+with open("datasets/business_list/dumps/place_details_unprocessed.json", "r", encoding="utf-8-sig", newline="") as file:
     place_details = json.load(file)
 
 # import neighborhood list
-neighborhood_list = []
-
-with open("query/neighborhood_list.txt", "r") as file:
-    for neighborhood in file:
-        name = neighborhood.replace("\n", "")
-
-        neighborhood_list.append(name)
+with open("datasets/business_list/assets/neighborhood_list.txt", "r") as file:
+    neighborhood_list = [name.replace("\n", "") for name in file]
 
 # write to csv
 def write_to_csv(business):
@@ -96,7 +91,7 @@ def write_to_csv(business):
     csv_writer.writerow([place_id, name, latitude, longitude, formatted_address, street_number, route, neighborhood, postal_code, curbside_pickup, price_level, rating, user_ratings_total, sun_open, sun_close, mon_open, mon_close, tue_open, tue_close, wed_open, wed_close, thu_open, thu_close, fri_open, fri_close, sat_open, sat_close])
 
 # csv
-with open("data/business_list.csv", "w", encoding="utf-8-sig", newline='') as csv_out:
+with open("datasets/business_list/business_list.csv", "w", encoding="utf-8-sig", newline='') as csv_out:
     csv_writer = csv.writer(csv_out)
     csv_writer.writerow(["place_id", "name", "latitude", "longitude", "formatted_address", "street_number", "route", "neighborhood", "postal_code", "curbside_pickup", "price_level", "rating", "user_ratings_total", "sun_open", "sun_close", "mon_open", "mon_close", "tue_open", "tue_close", "wed_open", "wed_close", "thu_open", "thu_close", "fri_open", "fri_close", "sat_open", "sat_close"])
 
