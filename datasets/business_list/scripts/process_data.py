@@ -9,7 +9,7 @@ with open("datasets/business_list/assets/neighborhood_list.txt", "r") as file:
     neighborhood_list = [name.replace("\n", "") for name in file]
 
 # write to csv
-def write_to_csv(business):
+def get_info(business):
     business_status = business.get("business_status")
 
     # Address components
@@ -88,7 +88,9 @@ def write_to_csv(business):
                 sat_open = open.get("time")
                 sat_close = close.get("time")
 
-    csv_writer.writerow([place_id, name, latitude, longitude, formatted_address, street_number, route, neighborhood, postal_code, curbside_pickup, price_level, rating, user_ratings_total, sun_open, sun_close, mon_open, mon_close, tue_open, tue_close, wed_open, wed_close, thu_open, thu_close, fri_open, fri_close, sat_open, sat_close])
+    output.append([place_id, name, latitude, longitude, formatted_address, street_number, route, neighborhood, postal_code, curbside_pickup, price_level, rating, user_ratings_total, sun_open, sun_close, mon_open, mon_close, tue_open, tue_close, wed_open, wed_close, thu_open, thu_close, fri_open, fri_close, sat_open, sat_close])
+
+output = []
 
 # csv
 with open("datasets/business_list/business_list.csv", "w", encoding="utf-8-sig", newline='') as csv_out:
@@ -96,4 +98,6 @@ with open("datasets/business_list/business_list.csv", "w", encoding="utf-8-sig",
     csv_writer.writerow(["place_id", "name", "latitude", "longitude", "formatted_address", "street_number", "route", "neighborhood", "postal_code", "curbside_pickup", "price_level", "rating", "user_ratings_total", "sun_open", "sun_close", "mon_open", "mon_close", "tue_open", "tue_close", "wed_open", "wed_close", "thu_open", "thu_close", "fri_open", "fri_close", "sat_open", "sat_close"])
 
     for business in place_details:
-        write_to_csv(business)
+        get_info(business)
+
+    csv_writer.writerows(output)
