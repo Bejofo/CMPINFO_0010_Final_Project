@@ -12,7 +12,7 @@ geocoded_food_facilities = pd.read_csv("/mnt/c/Users/thxs4/Downloads/geo_coded.c
 def compare_names(A,B):
   if A==B:
     return True
-  if any( normalize_names(x) == normalize_names(y) for x,y in itertools.prod(A.split('/'),B.split('/'))):
+  if any( normalize_names(x) == normalize_names(y) for x,y in itertools.product(A.split('/'),B.split('/'))):
     return True
   return False
 
@@ -46,11 +46,17 @@ def address_to_id(R):
   
   if row.shape[0] > 1:
     for r in row.iterrows():
-      if normalize_names(r[1]['facility_name']) == fac_name:
+      if compare_names(r[1]['facility_name'],fac_name):
         return r[1]['id']
-
   return None
 
 ids = business_list.apply(address_to_id,axis=1)
 print(business_list[ids.isna()][['name','postal_code','street_number']])
 print(ids.isna().sum())
+
+
+
+if __name__ =='__main__':
+  pass
+  # id = address_to_id(2351,None,15205)
+  # print(id)
