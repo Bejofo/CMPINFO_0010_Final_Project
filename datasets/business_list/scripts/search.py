@@ -17,6 +17,14 @@ WEST_EAST_DIST_KM = 19.47 # 85 km per degree longitude
 SOUTH_NORTH_DIST_DEG = NORTH_LIMIT - SOUTH_LIMIT
 SOUTH_NORTH_DIST_KM = 15.58 # 111 km per degree latitude
 
+# Calculate parameters
+RADIUS = SPACING / 2 * math.sqrt(2)
+RADIUS_M = SPACING * 1000
+X_INTERVALS = math.floor(WEST_EAST_DIST_KM / SPACING)
+X_START = 1 / X_INTERVALS / 2
+Y_INTERVALS = math.floor(SOUTH_NORTH_DIST_KM / SPACING)
+Y_START = 1 / Y_INTERVALS / 2
+
 # Connect to Google Maps API
 api_key = getpass("Enter the API key: ")
 api_session = API_Session(api_key)
@@ -25,14 +33,6 @@ api_session = API_Session(api_key)
 # Import map
 map = Image.open("datasets/business_list/assets/pittsburgh.png")
 map.load()
-
-# Calculate parameters
-RADIUS = SPACING / 2 * math.sqrt(2)
-RADIUS_M = SPACING * 1000
-X_INTERVALS = math.floor(WEST_EAST_DIST_KM / SPACING)
-X_START = 1 / X_INTERVALS / 2
-Y_INTERVALS = math.floor(SOUTH_NORTH_DIST_KM / SPACING)
-Y_START = 1 / Y_INTERVALS / 2
 
 # Query places list from API
 output = []
