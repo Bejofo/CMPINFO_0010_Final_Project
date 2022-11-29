@@ -1,4 +1,5 @@
 import math, json
+from getpass import getpass
 from PIL import Image
 from api import API_Session
 
@@ -17,7 +18,7 @@ SOUTH_NORTH_DIST_DEG = NORTH_LIMIT - SOUTH_LIMIT
 SOUTH_NORTH_DIST_KM = 15.58 # 111 km per degree latitude
 
 # Connect to Google Maps API
-api_key = input("Enter the API key: ")
+api_key = getpass("Enter the API key: ")
 api_session = API_Session(api_key)
 
 # PLACE SEARCH
