@@ -1,0 +1,23 @@
+site_name,description,air_now_mnemonic,address,latitude,longitude,enabled
+Harrison Township,Harrison Township Ozone and NO/NOx Site,HT1,"Highlands Senior High School - 1500 Pacific Avenue Natrona Heights, PA 15065",40.613864,-79.729569,t
+South Fayette,South Fayette Ozone Site,SF1,"South Fayette Elementary School - 3640 Old Oakdale Road McDonald, PA 15057",40.375647,-80.169931,t
+Lawrenceville,"Lawrenceville Ozone, and Met Site",LV1,"Allegheny County Health Department - 301 39th Street, Building 7 Pittsburgh, PA 15201",40.465433,-79.960742,t
+Liberty,Liberty Borough South Allegheny High School Site,,"South Allegheny High School - 2743 Washington Blvd McKeesport, PA 15133",40.323856,-79.868064,t
+West Allegheny,West Allegheny H2S Site,,,40.444747,-80.267303,f
+Avalon,Avalon PM-2.5 Site,,"520 Orchard Street Pittsburgh, PA 15202",40.499789,-80.071347,t
+Lawrenceville 2,LV2 NCORE site,,"Allegheny County Health Department - 01 39th Street, Building 7 Pittsburgh, PA 15201",40.465433,-79.960742,t
+Monroeville,PM-10 BAM Site,,,40.450117,-79.770961,f
+North Braddock,PM-10 BAM Site,,"North Braddock Borough Building - 600 Anderson Street Braddock, PA 15104",40.402267,-79.860942,t
+Clairton,Clairton PM-2.5 Site,,"Clairton Educational Center - 501 Waddel Street Clairton, PA 15025",40.294381,-79.885303,t
+Pittsburgh 8_Manchester,,,"Manchester Elementary School - 1612 Manhattan Street Pittsburgh, PA 15233",40.456383,-80.026417,f
+Lincoln,Lincoln Borough PM-10 & PM-2.5,,"Bellbridge Road Elizabeth, PA 15037",40.308278,-79.869103,f
+Parkway East,Near Road CO and NO2 Monitor,,"Hosanna House Event Center - 400 Sherwood Road Pittsburgh, PA 15221",40.437431,-79.863572,t
+Natrona Lead,,,"79 North Canal Street Natrona,  ",40.618917,-79.719397,f
+Bridgeville,Lead,,"1311 Union Street Bridgeville,  ",40.362992,-80.102131,f
+Liberty 2,Liberty Borough South Allegheny High School Site,LB1,"South Allegheny High School - 2743 Washington Blvd McKeesport, PA 15133",40.323856,-79.868064,t
+Glassport High Street,Glassport High Street PM-10,,"Water Tower on High Street Glassport, PA 15045",40.326019,-79.881747,t
+Flag Plaza,Downtown PM-10 and CO,,"Boy Scouts of America Building - 1275 Bedford Avenue Pittsburgh, PA 15219",40.443417,-79.990353,f
+Court House,Downtown CO Site,,,40.438369,-79.9968,f
+Opal Court,,,,,,f
+West Mifflin,SO2 Monitor,,"New Emerson Elementary School - 1922 Pennsylvania Avenue West Mifflin, PA 15122",40.3629,-79.86506,f
+USS Clairton Sodar Site,Sodar Rass Site,,,,,t
