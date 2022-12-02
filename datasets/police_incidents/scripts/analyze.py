@@ -2,7 +2,7 @@ import csv
 from nearby_incidents import get_nearby_incidents
 
 # CONFIG
-RADIUS = 1
+RADIUS = 0.3
 
 output = get_nearby_incidents("datasets/business_list/business_list.csv", "datasets/police_incidents/assets/police_incidents.csv", RADIUS, "Y", "X")
 
