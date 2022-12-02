@@ -13,6 +13,8 @@ Fire Incidents: https://data.wprdc.org/dataset/fire-incidents-in-city-of-pittsbu
 
 Police Incidents: https://data.wprdc.org/dataset/police-incident-blotter
 
+Air Quality: https://data.wprdc.org/dataset/allegheny-county-air-quality
+
 Health Violations: https://data.wprdc.org/dataset/allegheny-county-restaurant-food-facility-inspection-violations/
 
 ## Overview
