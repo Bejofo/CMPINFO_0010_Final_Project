@@ -9,5 +9,5 @@ output = get_nearby_incidents("datasets/business_list/business_list.csv", "datas
 # write to csv
 with open("datasets/police_incidents/nearby_police_incidents.csv", "w", encoding="utf-8-sig", newline="") as csv_out:
     csv_writer = csv.writer(csv_out)
-    csv_writer.writerow(["place_id", "neighborhood", "value"])
+    csv_writer.writerow(["place_id", "neighborhood", "police_incidents"])
     csv_writer.writerows(output)

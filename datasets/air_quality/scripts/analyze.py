@@ -40,5 +40,5 @@ with open("datasets/business_list/business_list.csv", "r", encoding="utf-8-sig")
 # write to csv
 with open("datasets/air_quality/air_quality.csv", "w", encoding="utf-8-sig", newline="") as csv_out:
     csv_writer = csv.writer(csv_out)
-    csv_writer.writerow(["place_id", "neighborhood", "value"])
+    csv_writer.writerow(["place_id", "neighborhood", "index_value"])
     csv_writer.writerows(output)
