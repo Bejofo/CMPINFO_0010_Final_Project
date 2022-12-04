@@ -1,5 +1,5 @@
 # CMPINFO_0010_Final_Project
-Team Name: 
+Team Name: Trash Pandas
 
 ## Team Members
 Jason Ye: jay101@pitt.edu
